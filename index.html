@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      JS Playground - Interactive JavaScript Development Environment
+    </title>
+    <style>
+      :root {
+        --bg-primary: #121212;
+        --bg-secondary: #1e1e1e;
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+        --accent: #ffffff;
+        --accent-hover: rgba(255, 255, 255, 0.8);
+        --nav-height: 80px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-height);
+        background-color: rgba(18, 18, 18, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .nav-link:hover {
+        color: var(--text-primary);
+      }
+
+      .nav-button {
+        background: transparent;
+        color: var(--text-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: 1px solid var(--text-primary);
+      }
+
+      .nav-button:hover {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        padding-top: calc(var(--nav-height) + 2rem);
+      }
+
+      header {
+        text-align: center;
+        padding: 4rem 0;
+      }
+
+      h1 {
+        font-size: 4rem;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 6rem;
+        padding: 4rem 2rem;
+        background: radial-gradient(
+          circle at center,
+          var(--bg-secondary) 0%,
+          var(--bg-primary) 100%
+        );
+        border-radius: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 50%
+        );
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hero p {
+        font-size: 1.4rem;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .trusted-by {
+        text-align: center;
+        margin-bottom: 6rem;
+      }
+
+      .trusted-by h3 {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 2rem;
+      }
+
+      .logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
+        opacity: 0.6;
+      }
+
+      .download-section {
+        background: linear-gradient(
+          180deg,
+          var(--bg-secondary),
+          var(--bg-primary)
+        );
+        border-radius: 2rem;
+        padding: 4rem 2rem;
+        margin-bottom: 6rem;
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .download-card {
+        background-color: rgba(255, 255, 255, 0.03);
+        padding: 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        transition: transform 0.2s, background-color 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .download-card:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .system-requirements {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-top: 1rem;
+      }
+
+      .download-button {
+        display: inline-block;
+        background: transparent;
+        color: var(--text-primary);
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        margin-top: 1.5rem;
+        transition: all 0.2s;
+        border: 1px solid var(--text-primary);
+      }
+
+      .download-button:hover {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      .features {
+        margin-bottom: 6rem;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 2rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .feature-card ul {
+        list-style-position: inside;
+        margin-top: 1rem;
+        color: var(--text-secondary);
+      }
+
+      .security-section {
+        background: linear-gradient(
+          180deg,
+          var(--bg-secondary),
+          var(--bg-primary)
+        );
+        border-radius: 2rem;
+        padding: 4rem 2rem;
+        margin-bottom: 6rem;
+        text-align: center;
+      }
+
+      .security-section p {
+        max-width: 800px;
+        margin: 1.5rem auto;
+        font-size: 1.2rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 4rem 0;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .tagline {
+          font-size: 1.2rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-content">
+        <a href="#" class="nav-logo">JS Playground</a>
+        <div class="nav-links">
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#download" class="nav-link">Download</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <header>
+        <h1>Your Instant JavaScript Testing Ground</h1>
+        <p class="tagline">
+          A powerful, open-source playground for testing code snippets, solving coding challenges, and practicing your algorithm skills. Free forever, because it's made by developers for developers.
+        </p>
+      </header>
+
+      <section class="hero">
+        <p>
+          Write, test, and debug JavaScript code instantly in our open-source playground. Perfect for algorithm practice, testing snippets, and preparing for technical interviews. Join our community of developers who believe in open and accessible tools.
+        </p>
+      </section>
+
+      <!-- 
+      <section class="trusted-by">
+        <h3>Trusted by developers from</h3>
+        <div class="logos">
+        </div>
+      </section> 
+    -->
+
+      <section id="download" class="download-section">
+        <h2>Download JS Playground</h2>
+        <div class="download-grid">
+          <div class="download-card">
+            <h3>macOS</h3>
+            <p>For Apple Silicon and Intel Macs</p>
+            <div class="system-requirements">
+              Requires macOS 10.15 or later<br />
+              4GB RAM • 200MB Storage
+            </div>
+            <a href="#" class="download-button">Download for macOS</a>
+          </div>
+          <div class="download-card">
+            <h3>Windows</h3>
+            <p>Windows 10 and above</p>
+            <div class="system-requirements">
+              Requires Windows 10 or later<br />
+              4GB RAM • 200MB Storage
+            </div>
+            <a href="#" class="download-button">Download for Windows</a>
+          </div>
+          <div class="download-card">
+            <h3>Linux</h3>
+            <p>Ubuntu, Debian, and more</p>
+            <div class="system-requirements">
+              Requires Node.js 16+<br />
+              4GB RAM • 200MB Storage
+            </div>
+            <a href="#" class="download-button">Download for Linux</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features">
+        <h2>Built for Quick Testing</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>Open Source</h3>
+            <ul>
+              <li>100% free and open source</li>
+              <li>Community driven</li>
+              <li>Transparent development</li>
+              <li>Contribute and customize</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>Instant Code Execution</h3>
+            <ul>
+              <li>Zero setup required</li>
+              <li>Real-time output</li>
+              <li>Quick iteration cycles</li>
+              <li>Multiple console methods</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>Developer Focused</h3>
+            <ul>
+              <li>VS Code-like editor</li>
+              <li>Smart code completion</li>
+              <li>Syntax highlighting</li>
+              <li>Error detection</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>Practice Ready</h3>
+            <ul>
+              <li>Built-in test cases</li>
+              <li>Algorithm templates</li>
+              <li>Common utilities included</li>
+              <li>Save your solutions</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>Convenient Features</h3>
+            <ul>
+              <li>Dark/light themes</li>
+              <li>Keyboard shortcuts</li>
+              <li>Share code snippets</li>
+              <li>Import npm packages</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="security" class="security-section">
+        <h2>Safe and Open</h2>
+        <p>
+          Focus on solving problems without worrying about setup or security. As an open-source project, our code is transparent and community-reviewed. JS Playground runs your code in an isolated sandbox environment, making it perfect for testing and practicing without any risks.
+        </p>
+      </section>
+
+      <footer>
+        <p>
+          <a href="https://github.com/your-username/js-playground" style="color: var(--text-secondary); text-decoration: underline;">View on GitHub</a> •
+          &copy; 2024 JS Playground. Open source under MIT License.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
