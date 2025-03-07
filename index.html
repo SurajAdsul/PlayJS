@@ -18,6 +18,11 @@
         --app-version: "0.0.2";
       }
 
+      html {
+        scroll-padding-top: calc(var(--nav-height) + 2rem);
+        scroll-behavior: smooth;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -57,7 +62,11 @@
       .nav-logo {
         font-size: 1.5rem;
         font-weight: bold;
-        background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
+        background: linear-gradient(
+          45deg,
+          var(--text-primary),
+          var(--text-secondary)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-decoration: none;
@@ -114,7 +123,11 @@
         font-size: 4rem;
         line-height: 1.2;
         margin-bottom: 1.5rem;
-        background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
+        background: linear-gradient(
+          45deg,
+          var(--text-primary),
+          var(--text-secondary)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -197,6 +210,7 @@
       }
 
       .download-section {
+        scroll-margin-top: var(--nav-height);
         background: linear-gradient(
           180deg,
           var(--bg-secondary),
@@ -253,32 +267,127 @@
       }
 
       .features {
-        margin-bottom: 6rem;
+        scroll-margin-top: var(--nav-height);
+        margin: 8rem 0;
       }
 
-      .feature-grid {
+      .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .feature-intro {
+        text-align: center;
+        margin-bottom: 4rem;
+        padding: 0 2rem;
+      }
+
+      .feature-intro h2 {
+        font-size: 2.5rem;
+        line-height: 1.3;
+        margin-bottom: 1.5rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .feature-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        padding: 4rem 2rem;
+      }
+
+      .feature-item {
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .feature-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-item h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .feature-item p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .feature-item ul {
+        list-style: none;
+        margin-top: 1rem;
+      }
+
+      .feature-item li {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-item li strong {
+        color: var(--text-primary);
+      }
+
+      .features-screenshot {
+        margin: 4rem 0;
+        padding: 0 2rem;
+      }
+
+      .features-screenshot.secondary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
       }
 
-      .feature-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 2rem;
+      .screenshot-wrapper {
+        background: var(--bg-secondary);
         border-radius: 1rem;
+        overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: transform 0.2s, background-color 0.2s;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
       }
 
-      .feature-card:hover {
+      .screenshot-wrapper:hover {
         transform: translateY(-5px);
-        background-color: rgba(255, 255, 255, 0.05);
       }
 
-      .feature-card ul {
-        list-style-position: inside;
-        margin-top: 1rem;
-        color: var(--text-secondary);
+      .screenshot-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .feature-intro h2 {
+          font-size: 2rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+          padding: 2rem;
+        }
+
+        .features-screenshot.secondary {
+          grid-template-columns: 1fr;
+        }
       }
 
       .security-section {
@@ -389,6 +498,78 @@
           font-size: 0.9rem;
         }
       }
+
+      #security {
+        scroll-margin-top: var(--nav-height);
+      }
+
+      .feature-highlight {
+        background: linear-gradient(
+          45deg,
+          var(--bg-secondary),
+          rgba(30, 30, 30, 0.5)
+        );
+        border-radius: 1rem;
+        padding: 3rem 2rem;
+        margin: 4rem 2rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .highlight-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .highlight-content h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          45deg,
+          var(--text-primary),
+          var(--text-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .highlight-content p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .feature-item ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .feature-item li {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+      }
+
+      .feature-item li strong {
+        color: var(--text-primary);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      @media (max-width: 768px) {
+        .feature-highlight {
+          margin: 2rem 1rem;
+          padding: 2rem 1rem;
+        }
+
+        .highlight-content h3 {
+          font-size: 1.5rem;
+        }
+
+        .highlight-content p {
+          font-size: 1rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -398,7 +579,9 @@
         <div class="nav-links">
           <a href="#features" class="nav-link">Features</a>
           <a href="#download" class="nav-link">Download</a>
-          <a href="#" id="smart-download" class="nav-button">Download for <span id="platform-name">your platform</span></a>
+          <a href="#" id="smart-download" class="nav-button"
+            >Download for <span id="platform-name">your platform</span></a
+          >
         </div>
       </div>
     </nav>
@@ -407,13 +590,18 @@
       <header>
         <h1>Your Instant JavaScript Testing Ground</h1>
         <p class="tagline">
-          A powerful, open-source playground for testing code snippets, solving coding challenges, and practicing your algorithm skills. Free forever, because it's made by developers for developers.
+          A powerful, open-source playground for testing code snippets, solving
+          coding challenges, and practicing your algorithm skills. Free forever,
+          because it's made by developers for developers.
         </p>
       </header>
 
       <section class="hero">
         <p>
-          Write, test, and debug JavaScript code instantly in our open-source playground. Perfect for algorithm practice, testing snippets, and preparing for technical interviews. Join our community of developers who believe in open and accessible tools.
+          Write, test, and debug JavaScript code instantly in our open-source
+          playground. Perfect for algorithm practice, testing snippets, and
+          preparing for technical interviews. Join our community of developers
+          who believe in open and accessible tools.
         </p>
       </section>
 
@@ -432,82 +620,96 @@
             <h3>macOS</h3>
             <p>For Apple Silicon and Intel Macs</p>
             <div class="system-requirements">
-              Requires macOS 10.15 or later<br>
+              Requires macOS 10.15 or later<br />
               4GB RAM • 200MB Storage
             </div>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <a id="download-mac-arm" href="#" class="download-button">Download for M1/M2 Mac</a>
-              <a id="download-mac-intel" href="#" class="download-button">Download for Intel Mac</a>
+            <div style="display: flex; flex-direction: column; gap: 1rem">
+              <a id="download-mac-arm" href="#" class="download-button"
+                >Download for M1/M2 Mac</a
+              >
+              <a id="download-mac-intel" href="#" class="download-button"
+                >Download for Intel Mac</a
+              >
             </div>
           </div>
           <div class="download-card">
             <h3>Windows</h3>
             <p>Windows 10 and above</p>
             <div class="system-requirements">
-              Requires Windows 10 or later<br>
+              Requires Windows 10 or later<br />
               4GB RAM • 200MB Storage
             </div>
-            <a id="download-windows" href="#" class="download-button">Download for Windows</a>
+            <a id="download-windows" href="#" class="download-button"
+              >Download for Windows</a
+            >
           </div>
           <div class="download-card">
             <h3>Linux</h3>
             <p>Ubuntu, Debian, and more</p>
             <div class="system-requirements">
-              Requires Node.js 16+<br>
+              Requires Node.js 16+<br />
               4GB RAM • 200MB Storage
             </div>
-            <a id="download-linux" href="#" class="download-button">Download for Linux</a>
+            <a id="download-linux" href="#" class="download-button"
+              >Download for Linux</a
+            >
           </div>
         </div>
       </section>
 
       <section id="features" class="features">
-        <h2>Built for Quick Testing</h2>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <h3>Open Source</h3>
-            <ul>
-              <li>100% free and open source</li>
-              <li>Community driven</li>
-              <li>Transparent development</li>
-              <li>Contribute and customize</li>
-            </ul>
+        <div class="features-container">
+          <div class="feature-intro">
+            <h2>Built for Developers, Open for Everyone</h2>
+            <p class="feature-subtitle">
+              An open-source JavaScript playground in its early stages, built with core developer features. Join us in shaping its future through community contributions.
+            </p>
           </div>
-          <div class="feature-card">
-            <h3>Instant Code Execution</h3>
-            <ul>
-              <li>Zero setup required</li>
-              <li>Real-time output</li>
-              <li>Quick iteration cycles</li>
-              <li>Multiple console methods</li>
-            </ul>
+
+          <div class="features-screenshot">
+            <div class="screenshot-wrapper main">
+              <img
+                src="assets/image1.png"
+                alt="JS Playground Interface - Main Editor View"
+              />
+            </div>
           </div>
-          <div class="feature-card">
-            <h3>Developer Focused</h3>
-            <ul>
-              <li>VS Code-like editor</li>
-              <li>Smart code completion</li>
-              <li>Syntax highlighting</li>
-              <li>Error detection</li>
-            </ul>
-          </div>
-          <div class="feature-card">
-            <h3>Practice Ready</h3>
-            <ul>
-              <li>Built-in test cases</li>
-              <li>Algorithm templates</li>
-              <li>Common utilities included</li>
-              <li>Save your solutions</li>
-            </ul>
-          </div>
-          <div class="feature-card">
-            <h3>Convenient Features</h3>
-            <ul>
-              <li>Dark/light themes</li>
-              <li>Keyboard shortcuts</li>
-              <li>Share code snippets</li>
-              <li>Import npm packages</li>
-            </ul>
+
+          <div class="features-grid">
+            <div class="feature-item">
+              <h3>Open Source</h3>
+              <ul>
+                <li>
+                  <strong>100% Free</strong> - Always free and open source
+                </li>
+                <li>
+                  <strong>Community Driven</strong> - Built by developers, for
+                  developers
+                </li>
+                <li><strong>Transparent</strong> - Open development process</li>
+                <li>
+                  <strong>Customizable</strong> - Fork and modify as needed
+                </li>
+              </ul>
+            </div>
+
+            <div class="feature-item">
+              <h3>Developer Focused</h3>
+              <ul>
+                <li>
+                  <strong>Professional Editor</strong> - VS Code-like experience
+                </li>
+                <li>
+                  <strong>Smart Completion</strong> - Intelligent code
+                  suggestions
+                </li>
+                <li>
+                  <strong>Error Detection</strong> - Real-time error
+                  highlighting
+                </li>
+                <li><strong>NPM Support</strong> - Import packages directly</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -515,16 +717,28 @@
       <section id="security" class="security-section">
         <h2>Safe and Open</h2>
         <p>
-          Focus on solving problems without worrying about setup or security. As an open-source project, our code is transparent and community-reviewed. JS Playground runs your code in an isolated sandbox environment, making it perfect for testing and practicing without any risks.
+          Focus on solving problems without worrying about setup or security. As
+          an open-source project, our code is transparent and
+          community-reviewed. JS Playground runs your code in an isolated
+          sandbox environment, making it perfect for testing and practicing
+          without any risks.
         </p>
       </section>
 
       <section class="issues-section">
         <h2>Facing Issues?</h2>
-        <p>Found a bug or have a feature request? We'd love to hear from you!</p>
-        <a href="https://github.com/SurajAdsul/js-playground/issues" target="_blank" class="github-issue-button">
+        <p>
+          Found a bug or have a feature request? We'd love to hear from you!
+        </p>
+        <a
+          href="https://github.com/SurajAdsul/js-playground/issues"
+          target="_blank"
+          class="github-issue-button"
+        >
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z"/>
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z"
+            />
           </svg>
           Report an Issue
         </a>
@@ -532,65 +746,75 @@
 
       <footer>
         <p>
-          <a href="https://github.com/SurajAdsul/js-playground" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">View on GitHub</a> •
-          &copy; 2024 JS Playground. Open source under MIT License.
+          <a
+            href="https://github.com/SurajAdsul/js-playground"
+            target="_blank"
+            style="color: var(--text-secondary); text-decoration: underline"
+            >View on GitHub</a
+          >
+          • &copy; 2024 JS Playground. Open source under MIT License.
         </p>
       </footer>
     </div>
 
     <script>
       const APP_VERSION = "0.0.2";
-      
-      document.addEventListener('DOMContentLoaded', function() {
+
+      document.addEventListener("DOMContentLoaded", function () {
         // Platform detection
         function detectPlatform() {
           const platform = navigator.platform.toLowerCase();
           const userAgent = navigator.userAgent.toLowerCase();
-          
+
           // Detect M1/M2 Mac
-          if (platform.includes('mac') && userAgent.includes('mac os x')) {
-            if (userAgent.includes('arm64') || userAgent.includes('apple silicon')) {
-              return { name: 'macArm', display: 'M1/M2 Mac' };
+          if (platform.includes("mac") && userAgent.includes("mac os x")) {
+            if (
+              userAgent.includes("arm64") ||
+              userAgent.includes("apple silicon")
+            ) {
+              return { name: "macArm", display: "M1/M2 Mac" };
             }
-            return { name: 'macIntel', display: 'Mac' };
+            return { name: "macIntel", display: "Mac" };
           }
-          
+
           // Detect Windows
-          if (platform.includes('win')) {
-            return { name: 'windows', display: 'Windows' };
+          if (platform.includes("win")) {
+            return { name: "windows", display: "Windows" };
           }
-          
+
           // Detect Linux
-          if (platform.includes('linux')) {
-            return { name: 'linux', display: 'Linux' };
+          if (platform.includes("linux")) {
+            return { name: "linux", display: "Linux" };
           }
-          
-          return { name: 'unknown', display: 'your platform' };
+
+          return { name: "unknown", display: "your platform" };
         }
 
         const downloadLinks = {
           macArm: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}-arm64.dmg`,
           macIntel: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}.dmg`,
           windows: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground.Setup.${APP_VERSION}.exe`,
-          linux: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}.AppImage`
+          linux: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}.AppImage`,
         };
 
         // Update download links
-        document.getElementById('download-mac-arm').href = downloadLinks.macArm;
-        document.getElementById('download-mac-intel').href = downloadLinks.macIntel;
-        document.getElementById('download-windows').href = downloadLinks.windows;
-        document.getElementById('download-linux').href = downloadLinks.linux;
+        document.getElementById("download-mac-arm").href = downloadLinks.macArm;
+        document.getElementById("download-mac-intel").href =
+          downloadLinks.macIntel;
+        document.getElementById("download-windows").href =
+          downloadLinks.windows;
+        document.getElementById("download-linux").href = downloadLinks.linux;
 
         // Setup smart download button
         const platform = detectPlatform();
-        const smartDownloadBtn = document.getElementById('smart-download');
-        const platformName = document.getElementById('platform-name');
-        
-        if (platform.name !== 'unknown') {
+        const smartDownloadBtn = document.getElementById("smart-download");
+        const platformName = document.getElementById("platform-name");
+
+        if (platform.name !== "unknown") {
           platformName.textContent = platform.display;
           smartDownloadBtn.href = downloadLinks[platform.name];
         } else {
-          smartDownloadBtn.href = '#download';
+          smartDownloadBtn.href = "#download";
         }
       });
     </script>
