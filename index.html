@@ -1012,27 +1012,52 @@
 
         // Track download event
         function trackDownload(platform) {
-          if (typeof gtag !== 'undefined') {
+          console.log('Tracking download for platform:', platform);
+          if (typeof gtag === 'undefined') {
+            console.error('Google Analytics not loaded');
+            return;
+          }
+          
+          try {
             gtag('event', 'download', {
               'event_category': 'Application',
               'event_label': platform,
               'value': 1
             });
+            console.log('Successfully tracked download event');
+          } catch (error) {
+            console.error('Error tracking download:', error);
           }
+        }
+
+        // Track page view
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'page_view', {
+            'page_title': 'PlayJS - Interactive JavaScript Development Environment',
+            'page_location': window.location.href
+          });
         }
 
         // Update download links and add tracking
         document.getElementById("download-mac-arm").href = downloadLinks.macArm;
-        document.getElementById("download-mac-arm").addEventListener("click", () => trackDownload('macArm'));
+        document.getElementById("download-mac-arm").onclick = function(e) {
+          trackDownload('macArm');
+        };
 
         document.getElementById("download-mac-intel").href = downloadLinks.macIntel;
-        document.getElementById("download-mac-intel").addEventListener("click", () => trackDownload('macIntel'));
+        document.getElementById("download-mac-intel").onclick = function(e) {
+          trackDownload('macIntel');
+        };
 
         document.getElementById("download-windows").href = downloadLinks.windows;
-        document.getElementById("download-windows").addEventListener("click", () => trackDownload('windows'));
+        document.getElementById("download-windows").onclick = function(e) {
+          trackDownload('windows');
+        };
 
         document.getElementById("download-linux").href = downloadLinks.linux;
-        document.getElementById("download-linux").addEventListener("click", () => trackDownload('linux'));
+        document.getElementById("download-linux").onclick = function(e) {
+          trackDownload('linux');
+        };
 
         // Setup smart download button
         const platform = detectPlatform();
@@ -1042,7 +1067,9 @@
         if (platform.name !== "unknown") {
           platformName.textContent = platform.display;
           smartDownloadBtn.href = downloadLinks[platform.name];
-          smartDownloadBtn.addEventListener("click", () => trackDownload(platform.name));
+          smartDownloadBtn.onclick = function(e) {
+            trackDownload(platform.name);
+          };
         } else {
           smartDownloadBtn.href = "#download";
         }

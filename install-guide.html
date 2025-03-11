@@ -479,13 +479,30 @@
 
         // Track download event
         function trackDownload(platform) {
-          if (typeof gtag !== 'undefined') {
+          console.log('Tracking download for platform:', platform);
+          if (typeof gtag === 'undefined') {
+            console.error('Google Analytics not loaded');
+            return;
+          }
+          
+          try {
             gtag('event', 'download_from_guide', {
               'event_category': 'Application',
               'event_label': platform,
               'value': 1
             });
+            console.log('Successfully tracked download event');
+          } catch (error) {
+            console.error('Error tracking download:', error);
           }
+        }
+
+        // Track page view
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'page_view', {
+            'page_title': 'Installation Guide',
+            'page_location': window.location.href
+          });
         }
 
         // Setup smart download button
@@ -496,7 +513,10 @@
         if (platform.name !== "unknown") {
           platformName.textContent = platform.display;
           smartDownloadBtn.href = downloadLinks[platform.name];
-          smartDownloadBtn.addEventListener("click", () => trackDownload(platform.name));
+          // Use onclick instead of addEventListener for more reliable tracking
+          smartDownloadBtn.onclick = function(e) {
+            trackDownload(platform.name);
+          };
         } else {
           smartDownloadBtn.href = "index.html#download";
         }
@@ -506,11 +526,17 @@
           entries.forEach(entry => {
             if (entry.isIntersecting && typeof gtag !== 'undefined') {
               const platformGuide = entry.target.querySelector('h2')?.textContent.split(' ')[0] || 'Unknown';
-              gtag('event', 'view_install_guide', {
-                'event_category': 'Documentation',
-                'event_label': platformGuide,
-                'value': 1
-              });
+              console.log('Tracking guide view for:', platformGuide);
+              try {
+                gtag('event', 'view_install_guide', {
+                  'event_category': 'Documentation',
+                  'event_label': platformGuide,
+                  'value': 1
+                });
+                console.log('Successfully tracked guide view');
+              } catch (error) {
+                console.error('Error tracking guide view:', error);
+              }
             }
           });
         }, { threshold: 0.5 });
