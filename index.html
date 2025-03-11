@@ -1010,13 +1010,29 @@
           linux: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}.AppImage`,
         };
 
-        // Update download links
+        // Track download event
+        function trackDownload(platform) {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'download', {
+              'event_category': 'Application',
+              'event_label': platform,
+              'value': 1
+            });
+          }
+        }
+
+        // Update download links and add tracking
         document.getElementById("download-mac-arm").href = downloadLinks.macArm;
-        document.getElementById("download-mac-intel").href =
-          downloadLinks.macIntel;
-        document.getElementById("download-windows").href =
-          downloadLinks.windows;
+        document.getElementById("download-mac-arm").addEventListener("click", () => trackDownload('macArm'));
+
+        document.getElementById("download-mac-intel").href = downloadLinks.macIntel;
+        document.getElementById("download-mac-intel").addEventListener("click", () => trackDownload('macIntel'));
+
+        document.getElementById("download-windows").href = downloadLinks.windows;
+        document.getElementById("download-windows").addEventListener("click", () => trackDownload('windows'));
+
         document.getElementById("download-linux").href = downloadLinks.linux;
+        document.getElementById("download-linux").addEventListener("click", () => trackDownload('linux'));
 
         // Setup smart download button
         const platform = detectPlatform();
@@ -1026,6 +1042,7 @@
         if (platform.name !== "unknown") {
           platformName.textContent = platform.display;
           smartDownloadBtn.href = downloadLinks[platform.name];
+          smartDownloadBtn.addEventListener("click", () => trackDownload(platform.name));
         } else {
           smartDownloadBtn.href = "#download";
         }

@@ -477,6 +477,17 @@
           linux: `https://github.com/SurajAdsul/js-playground/releases/download/v${APP_VERSION}/JavaScript.Playground-${APP_VERSION}.AppImage`,
         };
 
+        // Track download event
+        function trackDownload(platform) {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'download_from_guide', {
+              'event_category': 'Application',
+              'event_label': platform,
+              'value': 1
+            });
+          }
+        }
+
         // Setup smart download button
         const platform = detectPlatform();
         const smartDownloadBtn = document.getElementById("smart-download");
@@ -485,9 +496,29 @@
         if (platform.name !== "unknown") {
           platformName.textContent = platform.display;
           smartDownloadBtn.href = downloadLinks[platform.name];
+          smartDownloadBtn.addEventListener("click", () => trackDownload(platform.name));
         } else {
           smartDownloadBtn.href = "index.html#download";
         }
+
+        // Track page section views
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && typeof gtag !== 'undefined') {
+              const platformGuide = entry.target.querySelector('h2')?.textContent.split(' ')[0] || 'Unknown';
+              gtag('event', 'view_install_guide', {
+                'event_category': 'Documentation',
+                'event_label': platformGuide,
+                'value': 1
+              });
+            }
+          });
+        }, { threshold: 0.5 });
+
+        // Observe each platform guide section
+        document.querySelectorAll('.platform-guide').forEach(section => {
+          observer.observe(section);
+        });
       });
     </script>
   </body>
