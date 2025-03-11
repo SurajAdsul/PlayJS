@@ -402,101 +402,6 @@
       }
 
       @media (max-width: 768px) {
-        .feature-intro h2 {
-          font-size: 2rem;
-        }
-
-        .features-grid {
-          grid-template-columns: 1fr;
-          padding: 2rem;
-        }
-
-        .features-screenshot.secondary {
-          grid-template-columns: 1fr;
-        }
-
-        .github-link {
-          order: -1;
-        }
-
-        .github-icon {
-          width: 20px;
-          height: 20px;
-        }
-      }
-
-      .security-section {
-        background: linear-gradient(
-          180deg,
-          var(--bg-secondary),
-          var(--bg-primary)
-        );
-        border-radius: 2rem;
-        padding: 4rem 2rem;
-        margin-bottom: 6rem;
-        text-align: center;
-      }
-
-      .security-section p {
-        max-width: 800px;
-        margin: 1.5rem auto;
-        font-size: 1.2rem;
-      }
-
-      .issues-section {
-        text-align: center;
-        margin-bottom: 6rem;
-        padding: 2rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .issues-section h2 {
-        margin-bottom: 1rem;
-      }
-
-      .issues-section p {
-        color: var(--text-secondary);
-        margin-bottom: 1.5rem;
-      }
-
-      .github-issue-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: transparent;
-        color: var(--text-primary);
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        transition: all 0.2s;
-        border: 1px solid var(--text-primary);
-      }
-
-      .github-issue-button:hover {
-        background: var(--text-primary);
-        color: var(--bg-primary);
-        transform: translateY(-2px);
-      }
-
-      .github-issue-button svg {
-        width: 20px;
-        height: 20px;
-      }
-
-      footer {
-        text-align: center;
-        padding: 4rem 0;
-        color: var(--text-secondary);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-      }
-
-      @media (max-width: 768px) {
         .container {
           padding: 1rem;
         }
@@ -507,25 +412,6 @@
 
         .tagline {
           font-size: 1.2rem;
-        }
-
-        .nav-content {
-          justify-content: center;
-        }
-
-        .nav-links {
-          position: fixed;
-          bottom: 1rem;
-          left: 50%;
-          transform: translateX(-50%);
-          background: rgba(18, 18, 18, 0.9);
-          padding: 0.75rem;
-          border-radius: 0.75rem;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(10px);
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          display: flex;
-          gap: 1rem;
         }
 
         .nav-link {
@@ -737,13 +623,89 @@
         width: 20px;
         height: 20px;
       }
+
+      /* Mobile menu styles */
+      .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .mobile-menu-toggle span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+
+      .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .mobile-menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      @media (max-width: 768px) {
+        .mobile-menu-toggle {
+          display: flex;
+        }
+
+        .nav-content {
+          justify-content: space-between;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: var(--nav-height);
+          left: 0;
+          right: 0;
+          background: rgba(18, 18, 18, 0.95);
+          backdrop-filter: blur(10px);
+          flex-direction: column;
+          align-items: center;
+          padding: 1.5rem;
+          gap: 1.5rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          transform: translateY(-150%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          z-index: 1000;
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .github-link {
+          margin-top: 0.5rem;
+        }
+      }
     </style>
   </head>
   <body>
     <nav class="nav">
       <div class="nav-content">
         <a href="#" class="nav-logo">PlayJS</a>
-        <div class="nav-links">
+        <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
           <a href="#features" class="nav-link">Features</a>
           <a href="#download" class="nav-link">Download</a>
           <a href="install-guide.html" class="nav-link">Install Guide</a>
@@ -974,6 +936,26 @@
       const APP_VERSION = "0.0.3";
 
       document.addEventListener("DOMContentLoaded", function () {
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        if (mobileMenuToggle && navLinks) {
+          mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+          });
+          
+          // Close mobile menu when a link is clicked
+          const navLinksElements = navLinks.querySelectorAll('a');
+          navLinksElements.forEach(link => {
+            link.addEventListener('click', function() {
+              mobileMenuToggle.classList.remove('active');
+              navLinks.classList.remove('active');
+            });
+          });
+        }
+
         // Platform detection
         function detectPlatform() {
           const platform = navigator.platform.toLowerCase();
